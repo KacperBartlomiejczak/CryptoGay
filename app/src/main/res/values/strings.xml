@@ -92,4 +92,7 @@
     <string name="alert_notification_body">Cena wynosi %1$s (%2$s %3$s)</string>
     <string name="alert_condition_reached_above">przekroczyła próg</string>
     <string name="alert_condition_reached_below">spadła poniżej progu</string>
+
+    <!-- Rate Limiting & Cache -->
+    <string name="cached_data_notice">Wyświetlam zapamiętane dane (odświeżanie co 10 minut)</string>
 </resources>

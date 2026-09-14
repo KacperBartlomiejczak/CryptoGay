@@ -1,8 +1,11 @@
 package com.example.cryptogay.ui.market;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.example.cryptogay.data.model.Coin;
 import com.example.cryptogay.data.repository.CoinRepository;
@@ -10,7 +13,7 @@ import com.example.cryptogay.data.repository.CoinRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MarketViewModel extends ViewModel {
+public class MarketViewModel extends AndroidViewModel {
 
     private final CoinRepository repository;
     private final MutableLiveData<MarketUiState> uiState = new MutableLiveData<>();
@@ -18,10 +21,19 @@ public class MarketViewModel extends ViewModel {
     private String currentQuery = "";
 
     public MarketViewModel() {
-        this(new CoinRepository());
+        this(new Application(), new CoinRepository());
+    }
+
+    public MarketViewModel(@NonNull Application application) {
+        this(application, CoinRepository.getInstance(application));
     }
 
     public MarketViewModel(CoinRepository repository) {
+        this(new Application(), repository);
+    }
+
+    public MarketViewModel(@NonNull Application application, CoinRepository repository) {
+        super(application);
         this.repository = repository;
     }
 
@@ -30,8 +42,19 @@ public class MarketViewModel extends ViewModel {
     }
 
     public void loadCoins() {
-        uiState.setValue(MarketUiState.loading());
-        repository.fetchCoins(new CoinRepository.Callback<List<Coin>>() {
+        loadCoins(false);
+    }
+
+    public void refreshCoins() {
+        loadCoins(true);
+    }
+
+    public void loadCoins(boolean forceRefresh) {
+        if (allCoins.isEmpty()) {
+            uiState.setValue(MarketUiState.loading());
+        }
+
+        CoinRepository.Callback<List<Coin>> callback = new CoinRepository.Callback<List<Coin>>() {
             @Override
             public void onSuccess(List<Coin> data) {
                 allCoins.clear();
@@ -43,9 +66,19 @@ public class MarketViewModel extends ViewModel {
 
             @Override
             public void onError(String message) {
-                uiState.setValue(MarketUiState.error(message));
+                if (allCoins.isEmpty()) {
+                    uiState.setValue(MarketUiState.error(message));
+                } else {
+                    applyFilter();
+                }
             }
-        });
+        };
+
+        if (forceRefresh) {
+            repository.fetchCoins(true, callback);
+        } else {
+            repository.fetchCoins(callback);
+        }
     }
 
     public void searchCoins(String query) {
@@ -69,6 +102,6 @@ public class MarketViewModel extends ViewModel {
     }
 
     public void retry() {
-        loadCoins();
+        loadCoins(true);
     }
 }

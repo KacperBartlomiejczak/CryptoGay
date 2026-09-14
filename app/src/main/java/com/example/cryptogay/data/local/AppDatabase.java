@@ -6,7 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {FavoriteCoin.class, PriceAlert.class}, version = 2, exportSchema = false)
+@Database(entities = {FavoriteCoin.class, PriceAlert.class, CachedCoin.class}, version = 3, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "cryptotracker_database";
@@ -14,6 +14,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract FavoriteCoinDao favoriteCoinDao();
     public abstract PriceAlertDao priceAlertDao();
+    public abstract CachedCoinDao cachedCoinDao();
 
     public static AppDatabase getInstance(Context context) {
         if (instance == null) {

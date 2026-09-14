@@ -82,7 +82,7 @@ public class MarketFragment extends Fragment {
     }
 
     private void setupListeners() {
-        binding.swipeRefresh.setOnRefreshListener(() -> viewModel.loadCoins());
+        binding.swipeRefresh.setOnRefreshListener(() -> viewModel.refreshCoins());
         binding.btnRetry.setOnClickListener(v -> viewModel.retry());
     }
 

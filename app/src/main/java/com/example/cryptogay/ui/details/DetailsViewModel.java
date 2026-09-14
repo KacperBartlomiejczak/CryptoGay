@@ -35,7 +35,7 @@ public class DetailsViewModel extends AndroidViewModel {
     private List<Entry> currentEntries = new ArrayList<>();
 
     public DetailsViewModel(@NonNull Application application) {
-        this(application, new CoinRepository(), new FavoritesRepository(application), new AlertsRepository(application));
+        this(application, CoinRepository.getInstance(application), new FavoritesRepository(application), new AlertsRepository(application));
     }
 
     public DetailsViewModel(CoinRepository coinRepository, FavoritesRepository favoritesRepository) {
