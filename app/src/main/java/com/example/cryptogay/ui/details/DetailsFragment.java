@@ -102,7 +102,14 @@ public class DetailsFragment extends Fragment {
     }
 
     private void setupListeners() {
-        binding.btnBack.setOnClickListener(v -> Navigation.findNavController(v).navigateUp());
+        binding.btnBack.setOnClickListener(v -> {
+            androidx.navigation.NavController navController = Navigation.findNavController(v);
+            if (!navController.navigateUp()) {
+                if (!navController.popBackStack()) {
+                    navController.navigate(R.id.marketFragment);
+                }
+            }
+        });
 
         binding.btnFavorite.setOnClickListener(v -> {
             viewModel.toggleFavorite();

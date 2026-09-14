@@ -8,10 +8,7 @@
         android:id="@+id/favoritesFragment"
         android:icon="@drawable/ic_nav_favorites"
         android:title="@string/title_favorites" />
-    <item
-        android:id="@+id/detailsFragment"
-        android:icon="@drawable/ic_nav_details"
-        android:title="@string/title_details" />
+
     <item
         android:id="@+id/alertsFragment"
         android:icon="@drawable/ic_nav_alerts"
