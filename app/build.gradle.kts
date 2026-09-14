@@ -73,6 +73,9 @@ dependencies {
     implementation(libs.room.runtime)
     annotationProcessor(libs.room.compiler)
 
+    // WorkManager (Background processing)
+    implementation(libs.work.runtime)
+
     // Testing
     testImplementation(libs.junit)
     testImplementation(libs.mockito.core)

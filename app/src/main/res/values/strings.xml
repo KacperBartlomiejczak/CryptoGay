@@ -5,6 +5,7 @@
     <string name="title_market">Rynek</string>
     <string name="title_favorites">Ulubione</string>
     <string name="title_details">Szczegóły</string>
+    <string name="title_alerts">Alerty</string>
 
     <!-- Market Screen -->
     <string name="search_hint">Szukaj po nazwie lub symbolu...</string>
@@ -44,6 +45,21 @@
     <string name="cd_back_button">Wróć</string>
     <string name="cd_favorite_button">Ulubione</string>
     <string name="cd_chart">Wykres cenowy</string>
+    <string name="section_alert_title">Alert cenowy (Próg)</string>
+    <string name="section_alert_desc_none">Ustaw próg cenowy, aby otrzymać powiadomienie push po jego osiągnięciu.</string>
+    <string name="btn_set_alert">Ustaw próg cenowy</string>
+    <string name="btn_edit_alert">Edytuj próg</string>
+    <string name="btn_delete_alert">Usuń alert</string>
+    <string name="dialog_alert_title">Próg cenowy dla %1$s</string>
+    <string name="dialog_alert_current_price">Aktualna cena: %1$s</string>
+    <string name="dialog_alert_condition_above">Gdy cena wzrośnie powyżej (≥)</string>
+    <string name="dialog_alert_condition_below">Gdy cena spadnie poniżej (≤)</string>
+    <string name="dialog_alert_target_hint">Cena docelowa w USD (np. 70000)</string>
+    <string name="dialog_alert_save">Zapisz alert</string>
+    <string name="dialog_alert_cancel">Anuluj</string>
+    <string name="alert_saved_success">Zapisano próg cenowy dla %1$s</string>
+    <string name="alert_deleted">Usunięto alert cenowy</string>
+    <string name="error_invalid_price">Wprowadź prawidłową cenę docelową większą od zera</string>
 
     <!-- Favorites Screen -->
     <string name="empty_favorites_title">Brak ulubionych kryptowalut</string>
@@ -53,4 +69,27 @@
     <string name="favorites_count_plural">%1$d kryptowaluty / kryptowalut</string>
     <string name="favorites_subtitle">Twoje obserwowane kryptowaluty</string>
     <string name="content_desc_empty_favorites">Ikona braku ulubionych</string>
+
+    <!-- Price Alerts Screen -->
+    <string name="alerts_subtitle">Twoje aktywne i skonfigurowane progi cenowe</string>
+    <string name="alerts_count_single">%1$d alert cenowy</string>
+    <string name="alerts_count_plural">%1$d alertów cenowych</string>
+    <string name="empty_alerts_title">Brak ustawionych alertów</string>
+    <string name="empty_alerts_description">Nie ustawiłeś jeszcze progu cenowego dla żadnej kryptowaluty. Przejdź do szczegółów monety, aby skonfigurować powiadomienie push.</string>
+    <string name="loading_alerts">Ładowanie alertów cenowych...</string>
+    <string name="error_loading_alerts_title">Nie udało się załadować alertów</string>
+    <string name="error_loading_alerts_description">Wystąpił problem z odczytem zapisanych alertów.</string>
+    <string name="alert_target_label">Próg: %1$s</string>
+    <string name="alert_condition_above">Powyżej (%1$s)</string>
+    <string name="alert_condition_below">Poniżej (%1$s)</string>
+    <string name="alert_status_active">Aktywny</string>
+    <string name="alert_status_triggered">Osiągnięty</string>
+    <string name="cd_delete_alert">Usuń ten alert cenowy</string>
+    <string name="cd_alert_icon">Ikona alertu cenowego</string>
+
+    <!-- Push Notifications -->
+    <string name="alert_notification_title">Alert cenowy: %1$s (%2$s)</string>
+    <string name="alert_notification_body">Cena wynosi %1$s (%2$s %3$s)</string>
+    <string name="alert_condition_reached_above">przekroczyła próg</string>
+    <string name="alert_condition_reached_below">spadła poniżej progu</string>
 </resources>

@@ -36,4 +36,14 @@
             android:defaultValue="@null" />
     </fragment>
 
+    <fragment
+        android:id="@+id/alertsFragment"
+        android:name="com.example.cryptogay.ui.alerts.AlertsFragment"
+        android:label="@string/title_alerts"
+        tools:layout="@layout/fragment_alerts">
+        <action
+            android:id="@+id/action_alertsFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+
 </navigation>

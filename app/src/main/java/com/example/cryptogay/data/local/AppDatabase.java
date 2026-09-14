@@ -6,13 +6,14 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {FavoriteCoin.class}, version = 1, exportSchema = false)
+@Database(entities = {FavoriteCoin.class, PriceAlert.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "cryptotracker_database";
     private static volatile AppDatabase instance;
 
     public abstract FavoriteCoinDao favoriteCoinDao();
+    public abstract PriceAlertDao priceAlertDao();
 
     public static AppDatabase getInstance(Context context) {
         if (instance == null) {
@@ -22,7 +23,9 @@ public abstract class AppDatabase extends RoomDatabase {
                             context.getApplicationContext(),
                             AppDatabase.class,
                             DATABASE_NAME
-                    ).build();
+                    )
+                    .fallbackToDestructiveMigration()
+                    .build();
                 }
             }
         }

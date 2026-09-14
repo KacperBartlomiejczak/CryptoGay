@@ -35,6 +35,20 @@ public class MainActivity extends AppCompatActivity {
         if (navHostFragment != null) {
             NavController navController = navHostFragment.getNavController();
             NavigationUI.setupWithNavController(binding.bottomNav, navController);
+
+            // Handle navigation from price alert push notification
+            if (getIntent() != null && getIntent().hasExtra("coin_id")) {
+                String coinId = getIntent().getStringExtra("coin_id");
+                if (coinId != null && !coinId.isEmpty()) {
+                    Bundle args = new Bundle();
+                    args.putString("coin_id", coinId);
+                    navController.navigate(R.id.detailsFragment, args);
+                }
+            }
         }
+
+        // Initialize notification channel and schedule periodic price alert checks
+        com.example.cryptogay.notification.AlertNotificationHelper.createNotificationChannel(this);
+        com.example.cryptogay.worker.PriceAlertWorker.schedulePeriodicCheck(this);
     }
 }

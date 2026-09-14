@@ -118,6 +118,13 @@ public class DetailsFragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.marketFragment)
         );
 
+        binding.btnSetOrEditAlert.setOnClickListener(v -> showSetAlertDialog());
+
+        binding.btnDetailDeleteAlert.setOnClickListener(v -> {
+            viewModel.deleteAlert();
+            Toast.makeText(requireContext(), R.string.alert_deleted, Toast.LENGTH_SHORT).show();
+        });
+
         binding.chipGroupTimeSpan.setOnCheckedStateChangeListener((group, checkedIds) -> {
             if (checkedIds.isEmpty()) return;
             int checkedId = checkedIds.get(0);
@@ -154,6 +161,7 @@ public class DetailsFragment extends Fragment {
         });
 
         viewModel.getIsFavorite().observe(getViewLifecycleOwner(), this::updateFavoriteButton);
+        viewModel.getCurrentAlert().observe(getViewLifecycleOwner(), this::updatePriceAlertCard);
     }
 
     private void showLoading() {
@@ -292,6 +300,82 @@ public class DetailsFragment extends Fragment {
             binding.btnFavorite.setImageResource(R.drawable.ic_star_outline);
             binding.btnFavorite.setContentDescription(getString(R.string.btn_favorite_add));
         }
+    }
+
+    private void updatePriceAlertCard(com.example.cryptogay.data.local.PriceAlert alert) {
+        if (binding == null) return;
+        if (alert == null) {
+            binding.tvDetailAlertStatus.setVisibility(View.GONE);
+            binding.tvDetailAlertDesc.setText(R.string.section_alert_desc_none);
+            binding.btnSetOrEditAlert.setText(R.string.btn_set_alert);
+            binding.btnDetailDeleteAlert.setVisibility(View.GONE);
+        } else {
+            binding.tvDetailAlertStatus.setVisibility(View.VISIBLE);
+            if (alert.isActive()) {
+                binding.tvDetailAlertStatus.setText(R.string.alert_status_active);
+                binding.tvDetailAlertStatus.setBackgroundResource(R.drawable.bg_badge_green);
+                binding.tvDetailAlertStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.crypto_green));
+            } else {
+                binding.tvDetailAlertStatus.setText(R.string.alert_status_triggered);
+                binding.tvDetailAlertStatus.setBackgroundResource(R.drawable.bg_badge_red);
+                binding.tvDetailAlertStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.crypto_red));
+            }
+
+            String formattedPrice = CurrencyFormatter.formatPrice(alert.getTargetPrice());
+            String conditionText = alert.isAbove()
+                    ? getString(R.string.alert_condition_above, formattedPrice)
+                    : getString(R.string.alert_condition_below, formattedPrice);
+            binding.tvDetailAlertDesc.setText(getString(R.string.alert_target_label, conditionText));
+            binding.btnSetOrEditAlert.setText(R.string.btn_edit_alert);
+            binding.btnDetailDeleteAlert.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void showSetAlertDialog() {
+        DetailsUiState state = viewModel.getUiState().getValue();
+        if (state == null || state.getCoin() == null) return;
+
+        Coin coin = state.getCoin();
+        com.example.cryptogay.data.local.PriceAlert currentAlert = viewModel.getCurrentAlert().getValue();
+
+        com.example.cryptogay.databinding.DialogSetAlertBinding dialogBinding =
+                com.example.cryptogay.databinding.DialogSetAlertBinding.inflate(getLayoutInflater());
+        dialogBinding.tvDialogTitle.setText(getString(R.string.dialog_alert_title, coin.getName()));
+        dialogBinding.tvDialogCurrentPrice.setText(getString(R.string.dialog_alert_current_price, CurrencyFormatter.formatPrice(coin.getCurrentPrice())));
+
+        if (currentAlert != null) {
+            dialogBinding.etTargetPrice.setText(String.valueOf(currentAlert.getTargetPrice()));
+            if (currentAlert.isAbove()) {
+                dialogBinding.rbAbove.setChecked(true);
+            } else {
+                dialogBinding.rbBelow.setChecked(true);
+            }
+        } else {
+            dialogBinding.etTargetPrice.setText(String.valueOf(coin.getCurrentPrice()));
+            dialogBinding.rbAbove.setChecked(true);
+        }
+
+        new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+                .setView(dialogBinding.getRoot())
+                .setPositiveButton(R.string.dialog_alert_save, (dialog, which) -> {
+                    String priceStr = dialogBinding.etTargetPrice.getText() != null
+                            ? dialogBinding.etTargetPrice.getText().toString().trim()
+                            : "";
+                    try {
+                        double targetPrice = Double.parseDouble(priceStr);
+                        if (targetPrice <= 0) {
+                            Toast.makeText(requireContext(), R.string.error_invalid_price, Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        boolean isAbove = dialogBinding.rbAbove.isChecked();
+                        viewModel.saveAlert(targetPrice, isAbove);
+                        Toast.makeText(requireContext(), getString(R.string.alert_saved_success, coin.getName()), Toast.LENGTH_SHORT).show();
+                    } catch (NumberFormatException e) {
+                        Toast.makeText(requireContext(), R.string.error_invalid_price, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton(R.string.dialog_alert_cancel, null)
+                .show();
     }
 
     @Override

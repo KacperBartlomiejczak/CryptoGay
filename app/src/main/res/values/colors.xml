@@ -2,6 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="crypto_primary">#2563EB</color>
     <color name="crypto_green">#10B981</color>
     <color name="crypto_green_bg">#E6F9F0</color>
     <color name="crypto_red">#EF4444</color>
