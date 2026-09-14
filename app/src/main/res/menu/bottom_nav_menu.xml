@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/marketFragment"
+        android:icon="@drawable/ic_nav_market"
+        android:title="@string/title_market" />
+    <item
+        android:id="@+id/favoritesFragment"
+        android:icon="@drawable/ic_nav_favorites"
+        android:title="@string/title_favorites" />
+    <item
+        android:id="@+id/detailsFragment"
+        android:icon="@drawable/ic_nav_details"
+        android:title="@string/title_details" />
+</menu>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="crypto_green">#10B981</color>
+    <color name="crypto_green_bg">#E6F9F0</color>
+    <color name="crypto_red">#EF4444</color>
+    <color name="crypto_red_bg">#FEE2E2</color>
+    <color name="crypto_gray">#6B7280</color>
+    <color name="crypto_card_bg">#FFFFFF</color>
+    <color name="crypto_search_bg">#F3F4F6</color>
+    <color name="crypto_rank_bg">#E5E7EB</color>
+    <color name="crypto_favorite_gold">#F59E0B</color>
+    <color name="crypto_favorite_gold_bg">#FEF3C7</color>
+    <color name="crypto_text_primary">#111827</color>
+    <color name="crypto_text_secondary">#6B7280</color>
+    <color name="crypto_card_border">#E5E7EB</color>
+    <color name="crypto_screen_bg">#F9FAFB</color>
+</resources>
